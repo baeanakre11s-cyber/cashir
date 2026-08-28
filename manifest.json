@@ -1,0 +1,17 @@
+{
+  "name": "نظام كاشير المطعم SHIFA",
+  "short_name": "كاشير SHIFA",
+  "description": "تطبيق كاشير المطعم",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#C62828",
+  "theme_color": "#C62828",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
