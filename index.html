@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نظام كاشير المطعم</title>
+<style>
+  .edit-btn{
+    background:#4CAF50;
+    color:white;
+    border:none;
+    padding:3px 8px;
+    border-radius:4px;
+    font-size:12px;
+    margin-top:5px;
+    cursor:pointer;
+}
+.edit-btn:hover{
+    background:#45a049;
+}
+  body{font-family:'Tahoma';background:#f5f5f5;margin:0;padding:0}
+.activate-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999}
+.activate-box{background:#fff;padding:30px;border-radius:10px;text-align:center;width:300px}
+.activate-box input{width:90%;padding:10px;margin:10px 0;font-size:18px;text-align:center}
+.activate-box.btn{background:#D32F2F;color:#fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:16px}
+.error{color:red;margin-top:10px}
+.header{background:#D32F2F;color:#fff;padding:15px;text-align:center;font-size:18px;font-weight:bold;display:flex;justify-content:space-between}
+.lang-btn{background:#fff;color:#D32F2F;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin:0 2px}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #D32F2F;overflow-x:auto}
+.tab{padding:12px 20px;cursor:pointer;white-space:nowrap}
+.tab.active{background:#D32F2F;color:#fff}
+.container{display:flex;gap:10px;padding:10px;flex-wrap:wrap}
+.menu{flex:3;min-width:300px}
+.cart{flex:1;background:#fff;padding:10px;border-radius:8px;min-width:250px}
+.item{
+  border:1px solid #ddd;padding:10px;margin:5px;border-radius:8px;
+  cursor:pointer;text-align:center;width:23%;min-width:180px;
+  position:relative;background:#fff;box-sizing:border-box;display:inline-block;vertical-align:top
+}
+.item.soldout{opacity:0.6}
+.item:hover{background:#FFEBEE}
+.item img{width:100%;height:100px;object-fit:cover;border-radius:5px;pointer-events:none;background:#f0f0f0}
+.cart-item{display:flex;justify-content:space-between;align-items:center;margin:5px 0;border-bottom:1px dashed #ccc;padding:3px}
+.btn-del{background:#f44336;color:#fff;border:none;padding:3px 8px;border-radius:3px;cursor:pointer}
+.btn{background:#D32F2F;color:#fff;border:none;padding:10px;width:100%;border-radius:5px;font-size:15px;margin-top:6px;cursor:pointer}
+.btn.green{background:#4CAF50}
+.btn.blue{background:#2196F3}
+.btn.yellow{background:#FFC107;color:#000}
+.total{font-size:22px;font-weight:bold;color:#D32F2F;text-align:center;margin:10px 0}
+.manage{display:none;background:#fff;padding:10px;margin:10px;border-radius:8px}
+.soldout-btn{position:absolute;top:2px;left:2px;background:#000;color:#fff;font-size:10px;padding:2px 5px;border-radius:3px;cursor:pointer;z-index:2}
+</style>
+</head>
+<body>
+
+<!-- 1. شاشة كود التفعيل -->
+<div class="activate-screen" id="activateScreen">
+  <div class="activate-box">
+    <h2>🔒 تفعيل النظام</h2>
+    <p>ادخل كود التفعيل الخاص بالمطعم</p>
+    <input type="text" id="licenseKey" placeholder="XXXX-XXXX-XXXX">
+    <button class="btn" onclick="checkLicense()">تفعيل</button>
+    <div class="error" id="errorMsg"></div>
+    <p style="font-size:12px;color:#666">الكود الافتراضي: SHIFA-2026-CASH</p>
+  </div>
+</div>
+
+<div id="mainApp" style="display:none">
+<div class="header">
+  <span id="title">1. الشاشة الرئيسية - نظام كاشير</span>
+  <div>
+    <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+    <button class="lang-btn" onclick="setLang('ku')">کوردی</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="logout()" style="background:#000;color:#fff">خروج</button>
+    <span onclick="toggleManage()" style="cursor:pointer">⚙️</span>
+  </div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="manage" id="managePanel">
+  <h3 id="manageTitle">4. ادارة المنيو</h3>
+  <input type="text" id="newName" placeholder="اسم الوجبة">
+  <input type="number" id="newPrice" placeholder="السعر">
+  <select id="newCat"></select>
+  <button class="btn green" id="addBtn" onclick="addNewItem()">اضافة وجبة جديدة</button>
+  <div id="manageList"></div>
+</div>
+
+<div class="container">
+  <div class="menu">
+    <h3 id="menuTitle">المنيو - اضغط اضافة</h3>
+    <div id="menuList"></div>
+  </div>
+
+  <div class="cart">
+    <h3 id="cartTitle">السلة</h3>
+    <label id="tableLabel">رقم الطاولة:</label>
+    <select id="tableNum"></select>
+    <div id="cartList"></div>
+    <label id="discountLabel">خصم سريع:</label>
+    <button class="btn yellow" onclick="discount(0)">0%</button>
+    <button class="btn yellow" onclick="discount(10)">10%</button>
+    <button class="btn yellow" onclick="discount(20)">20%</button>
+    <div class="total"><span id="totalLabel">المجموع الكلي</span>: <span id="total">0</span> <span id="currency">د.ع</span></div>
+    <button class="btn" id="printBtn" onclick="printBill()">🖨️ طباعة فاتورة</button>
+    <button class="btn green" id="saveBtn" onclick="saveBill()">💾 حفظ وفاتورة جديدة</button>
+    <button class="btn blue" id="reportBtn" onclick="dailyReport()">📊 التقرير اليومي</button>
+    <button onclick="exportMenu()" style="background:#FF9800;color:white;border:none;padding:12px;width:100%;border-radius:8px;margin-top:10px;font-size:16px;cursor:pointer;">
+    💾 تصدير المنيو
+</button>
+
+<button onclick="importMenu()" style="background:#9C27B0;color:white;border:none;padding:12px;width:100%;border-radius:8px;margin-top:10px;font-size:16px;cursor:pointer;">
+    📂 استيراد المنيو
+</button>
+  </div>
+</div>
+</div>
+
+<script>
+const VALID_KEY = "SHIFA-2026-CASH";
+
+function checkLicense(){
+  let key = document.getElementById('licenseKey').value.toUpperCase();
+  if(key == VALID_KEY){
+    localStorage.setItem('activated', 'true');
+    document.getElementById('activateScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+  } else {
+    document.getElementById('errorMsg').innerText = 'كود التفعيل خطأ ❌';
+  }
+}
+function logout(){
+  localStorage.removeItem('activated');
+  alert('تم تسجيل الخروج');
+  location.reload();
+}
+
+window.onload = function(){
+  if(localStorage.getItem('activated') == 'true'){
+    document.getElementById('activateScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+  }
+  setLang('ar');
+}
+  const translations = {
+  ar: {title:"1. الشاشة الرئيسية - نظام كاشير",menu:"المنيو - اضغط اضافة",cart:"السلة",table:"رقم الطاولة:",discount:"خصم سريع:",total:"المجموع الكلي",currency:"د.ع",print:"🖨️ طباعة فاتورة",save:"💾 حفظ وفاتورة جديدة",report:"📊 التقرير اليومي",manage:"4. ادارة المنيو",add:"اضافة وجبة جديدة",all:"الكل",meals:"وجبات",iraqi:"وجبات عراقية",app:"مقبلات",drink:"مشروبات",sweet:"حلويات",offer:"عروض",safari:"سفري",table1:"طاولة 1",table2:"طاولة 2",edit:"تعديل",delete:"حذف",out:"نفذت"},
+  ku: {title:"1. شاشەی سەرەکی - سیستمی کاشێر",menu:"مینۆ - کلیک بکە بۆ زیادکردن",cart:"سەبەتە",table:"ژمارەی مێز:",discount:"داشکاندنی خێرا:",total:"کۆی گشتی",currency:"د.ع",print:"🖨️ چاپکردنی فاتورە",save:"💾 پاشەکەوت و فاتورەی نوێ",report:"📊 ڕاپۆرتی ڕۆژانە",manage:"4. بەڕێوەبردنی مینۆ",add:"زیادکردنی خواردنی نوێ",all:"هەموو",meals:"خواردن",iraqi:"خواردنی عێراقی",app:"پێشخواردن",drink:"خواردنەوە",sweet:"شیرینی",offer:"ئۆفەر",safari:"بۆ ماڵەوە",table1:"مێز 1",table2:"مێز 2",edit:"دەستکاری",delete:"سڕینەوە",out:"تەواو بوو"},
+  en: {title:"1. Main Screen - Cashier System",menu:"Menu - Click to Add",cart:"Cart",table:"Table No:",discount:"Quick Discount:",total:"Total",currency:"IQD",print:"🖨️ Print Bill",save:"💾 Save & New Bill",report:"📊 Daily Report",manage:"4. Menu Management",add:"Add New Item",all:"All",meals:"Meals",iraqi:"Iraqi Food",app:"Appetizers",drink:"Drinks",sweet:"Desserts",offer:"Offers",safari:"Takeaway",table1:"Table 1",table2:"Table 2",edit:"Edit",delete:"Delete",out:"Sold Out"}
+};
+
+
+let currentLang = 'ar';
+// نضيف شريط البحث بالجافاسكربت
+document.addEventListener('DOMContentLoaded', function() {
+    let searchInput = document.createElement('input');
+    searchInput.id = 'searchInput';
+    searchInput.placeholder = 'ابحث عن وجبة...';
+    searchInput.style = 'width:98%; padding:10px; margin:10px; border:2px solid #ff5722; border-radius:8px; font-size:16px;';
+    document.body.prepend(searchInput);
+
+    // دالة البحث
+    searchInput.addEventListener('keyup', function(){
+        let search = this.value.toLowerCase();
+        let filtered = menu.filter(item => item.name.ar.toLowerCase().includes(search));
+        renderMenu(filtered);
+    });
+});
+let menu = JSON.parse(localStorage.getItem('menu')) || [
+  {name:{ar:'كباب',ku:'کەباب',en:'Kebab'},price:12000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب.png'},
+  {name:{ar:'كباب مع تمن',ku:'کەباب لەگەڵ برنج',en:'Kebab with Rice'},price:14000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب مع تمن.jpg'},
+  {name:{ar:'تمن وقليه',ku:'برنج و قلیە',en:'Rice and Qeema'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/تمن وقليه.jpg'},
+  {name:{ar:'تمن وفاصوليا',ku:'برنج و فاسۆلیا',en:'Rice and Beans'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/تمن وفاصوليا.jpg'},
+  {name:{ar:'منسف لحم',ku:'مەنەسف گۆشت',en:'Mansaf Meat'},price:20000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/منسف لحم.jpg'},
+  {name:{ar:'برجر لحم',ku:'بەرگەر گۆشت',en:'Beef Burger'},price:10000,cat:'وجبات',qty:0,soldout:false,img:'image/برجر لحم.jpg'},
+  {name:{ar:'بيتزا وسط',ku:'پیتزا مامناوەند',en:'Medium Pizza'},price:12000,cat:'وجبات',qty:0,soldout:false,img:'image/ai-generated-8885372_1280.png'},
+  {name:{ar:'بطاطا',ku:'پەتاتە',en:'Fries'},price:3000,cat:'مقبلات',qty:0,soldout:false,img:'image/بطاطا.jpg'},
+  {name:{ar:'كيك',ku:'کێک',en:'Cake'},price:4000,cat:'حلويات',qty:0,soldout:false,img:'image/كيك.jpg'} 
+  ,{name:{ar:'بيبسي',ku:'پێپسی',en:'Pepsi'},price:1000,cat:'مشروبات',qty:0,soldout:false,img:'image/بيبسى.jpg'}
+]
+let cart = {};
+let allBills = JSON.parse(localStorage.getItem('bills')) || [];
+let currentDiscount = 0;
+let currentCat = 'all';
+
+function setLang(lang){
+  currentLang=lang;
+  document.body.dir = lang=='en'?'ltr':'rtl';
+  document.body.lang = lang;
+  let t=translations[lang];
+  document.getElementById('title').innerText=t.title;
+  document.getElementById('menuTitle').innerText=t.menu;
+  document.getElementById('cartTitle').innerText=t.cart;
+  document.getElementById('tableLabel').innerText=t.table;
+  document.getElementById('discountLabel').innerText=t.discount;
+  document.getElementById('totalLabel').innerText=t.total;
+  document.getElementById('currency').innerText=t.currency;
+  document.getElementById('printBtn').innerText=t.print;
+  document.getElementById('saveBtn').innerText=t.save;
+  document.getElementById('reportBtn').innerText=t.report;
+  document.getElementById('manageTitle').innerText=t.manage;
+  document.getElementById('addBtn').innerText=t.add;
+  document.getElementById('tabs').innerHTML=`
+    <div class="tab active" onclick="filterCat('all',this)">${t.all}</div>
+    <div class="tab" onclick="filterCat('وجبات',this)">${t.meals}</div>
+    <div class="tab" onclick="filterCat('وجبات عراقية',this)">${t.iraqi}</div>
+    <div class="tab" onclick="filterCat('مقبلات',this)">${t.app}</div>
+    <div class="tab" onclick="filterCat('مشروبات',this)">${t.drink}</div>
+    <div class="tab" onclick="filterCat('حلويات',this)">${t.sweet}</div>
+    <div class="tab" onclick="filterCat('عروض',this)">${t.offer}</div>
+  `;
+  document.getElementById('tableNum').innerHTML=`<option>${t.safari}</option><option>${t.table1}</option><option>${t.table2}</option>`;
+  document.getElementById('newCat').innerHTML=`<option>${t.meals}</option><option>${t.iraqi}</option><option>${t.app}</option><option>${t.drink}</option><option>${t.sweet}</option><option>${t.offer}</option>`;
+  renderMenu();
+}
+
+function filterCat(cat, el){
+  currentCat = cat;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderMenu();
+}
+
+function renderMenu(items = menu){
+  let html='';
+  items.filter(i=>currentCat=='all'||i.cat==currentCat).forEach((item,i)=>{
+    let imgSrc = item.img || 'https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+Image';
+    html+=`<div class="item ${item.soldout?'soldout':''}" onclick="addToCart(${i})">
+      <span class="soldout-btn" onclick="toggleSoldout(${i});event.stopPropagation()">${translations[currentLang].out}</span>
+      <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+Image'">
+<div>${item.name[currentLang]}</div>
+<div>${item.price} ${translations[currentLang].currency}</div>
+<button onclick="editPrice(${i})" class="edit-btn">${translations[currentLang].edit}</button>
+<button onclick="deleteItem(${i})" class="delete-btn" style="background:#f44336;margin-right:5px;">${translations[currentLang].delete}</button></div>`;
+
+  });
+  document.getElementById('menuList').innerHTML=html;
+}
+
+function addToCart(i){
+  let name=menu[i].name[currentLang];
+  if(!cart[name]) cart[name]={...menu[i],qty:1};
+  else cart[name].qty++;
+  updateCart();
+}
+
+function updateCart(){
+  let html=''; let total=0;
+  for(let name in cart){
+    let item=cart[name];
+    total+=item.price*item.qty;
+    html+=`<div class="cart-item">
+      <span>${name} x${item.qty}</span>
+      <span>${item.price*item.qty} ${translations[currentLang].currency}</span>
+      <span class="cart-qty">
+        <button onclick="changeQty('${name}',-1)">-</button>
+        <button onclick="changeQty('${name}',1)">+</button>
+        <button class="btn-del" onclick="deleteItem('${name}')">${translations[currentLang].delete}</button>
+      </span>
+    </div>`;
+  }
+  document.getElementById('cartList').innerHTML=html;
+  let finalTotal = total - (total*currentDiscount/100);
+  document.getElementById('total').innerText = finalTotal;
+}
+
+function deleteItem(name){
+  // اذا رقم = نحذف من المنيو
+  if(typeof name === 'number'){
+    if(confirm("متأكد تريد تحذف " + menu[name].name[currentLang] + " ؟")){
+      menu.splice(name, 1);
+      localStorage.setItem('menu', JSON.stringify(menu));
+      renderMenu();
+    }
+  }
+  // اذا نص = نحذف من السلة
+  else {
+    delete cart[name];
+    updateCart();
+  }
+}
+
+function changeQty(name,d){cart[name].qty+=d; if(cart[name].qty<=0) delete cart[name]; updateCart();}
+function discount(p){currentDiscount=p; updateCart();}
+function toggleManage(){document.getElementById('managePanel').style.display = document.getElementById('managePanel').style.display=='none'?'block':'none';}
+function addNewItem(){alert('اضافة من الادارة قريبا')}
+function toggleSoldout(i){menu[i].soldout=!menu[i].soldout; saveMenu();}
+function saveMenu(){localStorage.setItem('menu',JSON.stringify(menu)); renderMenu();}
+function printBill(){window.print();}
+function saveBill(){newBill();}
+function newBill(){cart={};currentDiscount=0;updateCart();}
+function dailyReport(){alert('التقرير اليومي')}
+
+function editPrice(index){
+    let newPrice = prompt("اكتبي السعر الجديد بالدينار:", menu[index].price);
+    if(newPrice &&!isNaN(newPrice)){
+        menu[index].price = parseInt(newPrice);
+        localStorage.setItem('menu', JSON.stringify(menu));
+        renderMenu();
+    }
+}
+
+function exportMenu(){
+    let dataStr = JSON.stringify(menu);
+    let blob = new Blob([dataStr], {type: "application/json"});
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = "menu-backup-" + new Date().toLocaleDateString() + ".json";
+    a.click();
+    alert("تم حفظ نسخة احتياطية!");
+}
+
+function importMenu(){
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = e => {
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.onload = event => {
+            menu = JSON.parse(event.target.result);
+            localStorage.setItem('menu', JSON.stringify(menu));
+            renderMenu();
+            alert("تم استرجاع المنيو بنجاح!");
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+</script>
+</body>
+</html>
