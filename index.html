@@ -1,41 +1,42 @@
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <title>نظام كاشير المطعم</title>
 <style>
-  body{font-family:'Tahoma';background:#f5f5f5;margin:0;padding:0;font-size:18px!important}
- .edit-btn{background:#4CAF50;color:white;border:none;padding:6px 12px;border-radius:6px;font-size:16px!important;margin-top:8px;cursor:pointer}
- .edit-btn:hover{background:#45a049}
- .activate-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999}
- .activate-box{background:#fff;padding:30px;border-radius:10px;text-align:center;width:320px;font-size:18px}
- .activate-box input{width:90%;padding:12px;margin:10px 0;font-size:20px!important;text-align:center}
- .activate-box.btn{background:#D32F2F;color:#fff;border:none;padding:12px 20px;border-radius:5px;cursor:pointer;font-size:18px!important}
- .error{color:red;margin-top:10px;font-size:16px}
- .header{background:#D32F2F;color:#fff;padding:20px;text-align:center;font-size:24px!important;font-weight:bold;display:flex;justify-content:space-between;align-items:center}
- .lang-btn{background:#fff;color:#D32F2F;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;margin:0 3px;font-size:16px}
- .tabs{display:flex;background:#fff;border-bottom:2px solid #D32F2F;overflow-x:auto}
- .tab{padding:15px 20px;cursor:pointer;white-space:nowrap;font-size:18px}
- .tab.active{background:#D32F2F;color:#fff}
- .container{display:flex;gap:15px;padding:15px;flex-wrap:wrap}
- .menu{flex:3;min-width:300px}
-  #menuList{display:grid!important;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr))!important;gap:15px!important}
- .cart{flex:1;background:#fff;padding:15px;border-radius:8px;min-width:280px;font-size:18px}
- .item{border:1px solid #ddd;padding:12px;border-radius:10px;cursor:pointer;text-align:center;background:#fff;box-sizing:border-box;font-size:18px}
- .item.soldout{opacity:0.6}
- .item:hover{background:#FFEBEE}
- .item img{width:100%;height:120px;object-fit:cover;border-radius:8px;pointer-events:none;background:#f0f0f0}
- .item div{font-size:18px!important;margin:5px 0}
- .cart-item{display:flex;justify-content:space-between;align-items:center;margin:8px 0;border-bottom:1px dashed #ccc;padding:5px;font-size:16px}
- .btn-del{background:#f44336;color:#fff;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;font-size:14px}
- .btn{background:#D32F2F;color:#fff;border:none;padding:12px;width:100%;border-radius:5px;font-size:18px!important;margin-top:8px;cursor:pointer}
- .btn.green{background:#4CAF50}
- .btn.blue{background:#2196F3}
- .btn.yellow{background:#FFC107;color:#000}
- .total{font-size:26px!important;font-weight:bold;color:#D32F2F;text-align:center;margin:15px 0}
- .manage{display:none;background:#fff;padding:15px;margin:15px;border-radius:8px;font-size:18px}
- .soldout-btn{position:absolute;top:5px;left:5px;background:#000;color:#fff;font-size:12px;padding:4px 8px;border-radius:4px;cursor:pointer;z-index:2}
- .item{position:relative}
+  body{font-family:'Tahoma';background:#f5f5f5;margin:0;padding:0;font-size:18px}
+.edit-btn{background:#4CAF50;color:white;border:none;padding:5px 12px;border-radius:4px;font-size:15px!important;margin:3px;cursor:pointer}
+.edit-btn:hover{background:#45a049}
+.activate-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999}
+.activate-box{background:#fff;padding:30px;border-radius:10px;text-align:center;width:320px;font-size:18px}
+.activate-box input{width:90%;padding:10px;margin:10px 0;font-size:20px!important;text-align:center}
+.activate-box.btn{background:#D32F2F;color:#fff;border:none;padding:10px 20px;border-radius:5px;cursor:pointer;font-size:18px!important}
+.error{color:red;margin-top:10px;font-size:16px}
+.header{background:#D32F2F;color:#fff;padding:12px 15px;text-align:center;font-size:20px!important;font-weight:bold;display:flex;justify-content:space-between;align-items:center}
+.lang-btn{background:#fff;color:#D32F2F;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin:0 2px;font-size:15px}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #D32F2F;overflow-x:auto;padding:0 10px}
+.tab{padding:12px 18px;cursor:pointer;white-space:nowrap;font-size:17px}
+.tab.active{background:#D32F2F;color:#fff}
+.container{display:flex;gap:10px;padding:10px;flex-wrap:wrap}
+.menu{flex:3;min-width:300px}
+  #menuList{display:grid!important;grid-template-columns:repeat(2, 1fr)!important;gap:10px!important}
+ @media(min-width:900px){#menuList{grid-template-columns:repeat(4, 1fr)!important}}
+.cart{flex:1;background:#fff;padding:10px;border-radius:8px;min-width:260px;font-size:17px}
+.item{border:1px solid #ddd;padding:10px;border-radius:8px;cursor:pointer;text-align:center;background:#fff;box-sizing:border-box;font-size:17px;position:relative}
+.item.soldout{opacity:0.6}
+.item:hover{background:#FFEBEE}
+.item img{width:40px;height:40px;object-fit:cover;border-radius:5px;margin:5px auto;display:block}
+.item div{font-size:17px!important;margin:4px 0}
+.cart-item{display:flex;justify-content:space-between;align-items:center;margin:5px 0;border-bottom:1px dashed #ccc;padding:4px;font-size:16px}
+.btn-del{background:#f44336;color:#fff;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;font-size:15px;margin:3px}
+.btn{background:#D32F2F;color:#fff;border:none;padding:10px;width:100%;border-radius:5px;font-size:17px!important;margin-top:6px;cursor:pointer}
+.btn.green{background:#4CAF50}
+.btn.blue{background:#2196F3}
+.btn.yellow{background:#FFC107;color:#000}
+.total{font-size:22px!important;font-weight:bold;color:#D32F2F;text-align:center;margin:10px 0}
+.manage{display:none;background:#fff;padding:10px;margin:10px;border-radius:8px;font-size:17px}
+.soldout-btn{position:absolute;top:2px;left:2px;background:#000;color:#fff;font-size:11px;padding:2px 6px;border-radius:3px;cursor:pointer;z-index:2}
+ #searchInput{width:95%; padding:10px; margin:10px; border:2px solid #ff5722; border-radius:8px; font-size:17px;}
 </style>
 </head>
 <body>
@@ -54,23 +55,24 @@ html<!DOCTYPE html>
 
 <div id="mainApp" style="display:none">
 <div class="header">
+  <span>⚙️</span>
   <span id="title">1. الشاشة الرئيسية - نظام كاشير</span>
   <div>
-    <button class="lang-btn" onclick="setLang('ar')">عربي</button>
-    <button class="lang-btn" onclick="setLang('ku')">کوردی</button>
+    <button class="lang-btn" onclick="logout()" style="background:#000;color:#fff">خروج</button>
     <button class="lang-btn" onclick="setLang('en')">EN</button>
-  <button class="lang-btn" onclick="logout()" style="background:#000;color:#fff">خروج</button>
-    <span onclick="toggleManage()" style="cursor:pointer;font-size:24px">⚙️</span>
+    <button class="lang-btn" onclick="setLang('ku')">کوردی</button>
+    <button class="lang-btn" onclick="setLang('ar')">عربي</button>
   </div>
 </div>
 
 <div class="tabs" id="tabs"></div>
+<input type="text" id="searchInput" placeholder="ابحث عن وجبة...">
 
 <div class="manage" id="managePanel">
   <h3 id="manageTitle">4. ادارة المنيو</h3>
-  <input type="text" id="newName" placeholder="اسم الوجبة" style="font-size:18px;padding:8px">
-  <input type="number" id="newPrice" placeholder="السعر" style="font-size:18px;padding:8px">
-  <select id="newCat" style="font-size:18px;padding:8px"></select>
+  <input type="text" id="newName" placeholder="اسم الوجبة" style="font-size:17px;padding:8px">
+  <input type="number" id="newPrice" placeholder="السعر" style="font-size:17px;padding:8px">
+  <select id="newCat" style="font-size:17px;padding:8px"></select>
   <button class="btn green" id="addBtn" onclick="addNewItem()">اضافة وجبة جديدة</button>
   <div id="manageList"></div>
 </div>
@@ -84,7 +86,7 @@ html<!DOCTYPE html>
   <div class="cart">
     <h3 id="cartTitle">السلة</h3>
     <label id="tableLabel">رقم الطاولة:</label>
-    <select id="tableNum" style="font-size:18px;padding:8px;width:100%"></select>
+    <select id="tableNum" style="font-size:17px;padding:6px;width:100%"></select>
     <div id="cartList"></div>
     <label id="discountLabel">خصم سريع:</label>
     <button class="btn yellow" onclick="discount(0)">0%</button>
@@ -94,8 +96,8 @@ html<!DOCTYPE html>
     <button class="btn" id="printBtn" onclick="printBill()">🖨️ طباعة فاتورة</button>
     <button class="btn green" id="saveBtn" onclick="saveBill()">💾 حفظ وفاتورة جديدة</button>
     <button class="btn blue" id="reportBtn" onclick="dailyReport()">📊 التقرير اليومي</button>
-    <button onclick="exportMenu()" style="background:#FF9800;color:white;border:none;padding:12px;width:100%;border-radius:8px;margin-top:10px;font-size:18px;cursor:pointer;">💾 تصدير المنيو</button>
-    <button onclick="importMenu()" style="background:#9C27B0;color:white;border:none;padding:12px;width:100%;border-radius:8px;margin-top:10px;font-size:18px;cursor:pointer;">📂 استيراد المنيو</button>
+    <button onclick="exportMenu()" style="background:#FF9800;color:white;border:none;padding:10px;width:100%;border-radius:8px;margin-top:8px;font-size:17px;cursor:pointer;">💾 تصدير المنيو</button>
+    <button onclick="importMenu()" style="background:#9C27B0;color:white;border:none;padding:10px;width:100%;border-radius:8px;margin-top:8px;font-size:17px;cursor:pointer;">📂 استيراد المنيو</button>
   </div>
 </div>
 </div>
@@ -125,6 +127,11 @@ window.onload = function(){
     document.getElementById('mainApp').style.display='block';
   }
   setLang('ar');
+  document.getElementById('searchInput').addEventListener('keyup', function(){
+    let search = this.value.toLowerCase();
+    let filtered = menu.filter(item => item.name.ar.toLowerCase().includes(search));
+    renderMenu(filtered);
+  });
 }
   const translations = {
   ar: {title:"1. الشاشة الرئيسية - نظام كاشير",menu:"المنيو - اضغط اضافة",cart:"السلة",table:"رقم الطاولة:",discount:"خصم سريع:",total:"المجموع الكلي",currency:"د.ع",print:"🖨️ طباعة فاتورة",save:"💾 حفظ وفاتورة جديدة",report:"📊 التقرير اليومي",manage:"4. ادارة المنيو",add:"اضافة وجبة جديدة",all:"الكل",meals:"وجبات",iraqi:"وجبات عراقية",app:"مقبلات",drink:"مشروبات",sweet:"حلويات",offer:"عروض",safari:"سفري",table1:"طاولة 1",table2:"طاولة 2",edit:"تعديل",delete:"حذف",out:"نفذت"},
@@ -133,19 +140,6 @@ window.onload = function(){
 };
 
 let currentLang = 'ar';
-// شريط البحث
-document.addEventListener('DOMContentLoaded', function() {
-    let searchInput = document.createElement('input');
-    searchInput.id = 'searchInput';
-    searchInput.placeholder = 'ابحث عن وجبة...';
-    searchInput.style = 'width:96%; padding:12px; margin:15px; border:2px solid #ff5722; border-radius:8px; font-size:18px;';
-    document.querySelector('.menu').prepend(searchInput);
-    searchInput.addEventListener('keyup', function(){
-        let search = this.value.toLowerCase();
-        let filtered = menu.filter(item => item.name.ar.toLowerCase().includes(search));
-        renderMenu(filtered);
-    });
-});
 let menu = JSON.parse(localStorage.getItem('menu')) || [
   {name:{ar:'كباب',ku:'کەباب',en:'Kebab'},price:12000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب.png'},
   {name:{ar:'كباب مع تمن',ku:'کەباب لەگەڵ برنج',en:'Kebab with Rice'},price:14000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب مع تمن.jpg'},
@@ -159,14 +153,12 @@ let menu = JSON.parse(localStorage.getItem('menu')) || [
   {name:{ar:'بيبسي',ku:'پێپسی',en:'Pepsi'},price:1000,cat:'مشروبات',qty:0,soldout:false,img:'image/بيبسى.jpg'}
 ]
 let cart = {};
-let allBills = JSON.parse(localStorage.getItem('bills')) || [];
 let currentDiscount = 0;
 let currentCat = 'all';
 
 function setLang(lang){
   currentLang=lang;
   document.body.dir = lang=='en'?'ltr':'rtl';
-  document.body.lang = lang;
   let t=translations[lang];
   document.getElementById('title').innerText=t.title;
   document.getElementById('menuTitle').innerText=t.menu;
@@ -180,6 +172,7 @@ function setLang(lang){
   document.getElementById('reportBtn').innerText=t.report;
   document.getElementById('manageTitle').innerText=t.manage;
   document.getElementById('addBtn').innerText=t.add;
+  document.getElementById('searchInput').placeholder = lang=='ar'?'ابحث عن وجبة...':lang=='ku'?'گەڕان بۆ خواردن...':'Search item...';
   document.getElementById('tabs').innerHTML=`
     <div class="tab active" onclick="filterCat('all',this)">${t.all}</div>
     <div class="tab" onclick="filterCat('وجبات',this)">${t.meals}</div>
@@ -204,10 +197,10 @@ function filterCat(cat, el){
 function renderMenu(items = menu){
   let html='';
   items.filter(i=>currentCat=='all'||i.cat==currentCat).forEach((item,i)=>{
-    let imgSrc = item.img || 'https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+Image';
+    let imgSrc = item.img || 'https://via.placeholder.com/40/CCCCCC/FFFFFF';
     html+=`<div class="item ${item.soldout?'soldout':''}" onclick="addToCart(${i})">
       <span class="soldout-btn" onclick="toggleSoldout(${i});event.stopPropagation()">${translations[currentLang].out}</span>
-      <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+Image'">
+      <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/40/CCCCCC/FFFFFF'">
       <div>${item.name[currentLang]}</div>
       <div>${item.price} ${translations[currentLang].currency}</div>
       <button onclick="editPrice(${i});event.stopPropagation()" class="edit-btn">${translations[currentLang].edit}</button>
@@ -232,11 +225,7 @@ function updateCart(){
     html+=`<div class="cart-item">
       <span>${name} x${item.qty}</span>
       <span>${item.price*item.qty} ${translations[currentLang].currency}</span>
-      <span class="cart-qty">
-        <button onclick="changeQty('${name}',-1)">-</button>
-        <button onclick="changeQty('${name}',1)">+</button>
-        <button class="btn-del" onclick="deleteFromCart('${name}')">${translations[currentLang].delete}</button>
-      </span>
+      <span><button onclick="changeQty('${name}',-1)">-</button><button onclick="changeQty('${name}',1)">+</button><button class="btn-del" onclick="deleteFromCart('${name}')">${translations[currentLang].delete}</button></span>
     </div>`;
   }
   document.getElementById('cartList').innerHTML=html;
@@ -280,7 +269,6 @@ function exportMenu(){
     a.href = url;
     a.download = "menu-backup-" + new Date().toLocaleDateString() + ".json";
     a.click();
-    alert("تم حفظ نسخة احتياطية!");
 }
 
 function importMenu(){
