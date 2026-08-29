@@ -182,16 +182,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 let menu = JSON.parse(localStorage.getItem('menu')) || [
-  {name:{ar:'كباب',ku:'کەباب',en:'Kebab'},price:12000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/كباب.png'},
-  {name:{ar:'كباب مع تمن',ku:'کەباب لەگەڵ برنج',en:'Kebab with Rice'},price:14000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/كباب مع تمن.jpg'},
-  {name:{ar:'تمن وقليه',ku:'برنج و قلیە',en:'Rice and Qeema'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/تمن وقليه.jpg'},
-  {name:{ar:'تمن وفاصوليا',ku:'برنج و فاسۆلیا',en:'Rice and Beans'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/تمن وفاصوليا.jpg'},
-  {name:{ar:'منسف لحم',ku:'مەنەسف گۆشت',en:'Mansaf Meat'},price:20000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/منسف لحم.jpg'},
-  {name:{ar:'برجر لحم',ku:'بەرگەر گۆشت',en:'Beef Burger'},price:10000,cat:'وجبات',qty:0,soldout:false,img:'/برجر لحم.jpg'},
-  {name:{ar:'بيتزا وسط',ku:'پیتزا مامناوەند',en:'Medium Pizza'},price:12000,cat:'وجبات',qty:0,soldout:false,img:'/ai-generated-8885372_1280.png'},
-  {name:{ar:'بطاطا',ku:'پەتاتە',en:'Fries'},price:3000,cat:'مقبلات',qty:0,soldout:false,img:'/بطاطا.jpg'},
-  {name:{ar:'كيك',ku:'کێک',en:'Cake'},price:4000,cat:'حلويات',qty:0,soldout:false,img:'/كيك.jpg'},
-  {name:{ar:'بيبسي',ku:'پێپسی',en:'Pepsi'},price:1000,cat:'مشروبات',qty:0,soldout:false,img:'/بيبسى.jpg'}
+{name:{ar:'كباب',ku:'كباب',en:'Kebab'},price:12000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب.png'},
+{name:{ar:'كباب مع تمن',ku:'كباب لهكل برنج',en:'Kebab with Rice'},price:14000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب مع تمن.jpg'},
+{name:{ar:'تمن وقليه',ku:'برنج و قليه',en:'Rice and Qeema'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/تمن وقليه.jpg'},
+{name:{ar:'تمن وفاصوليا',ku:'برنج و فاصوليا',en:'Rice and Beans'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/تمن وفاصوليا.jpg'},
+{name:{ar:'منسف لحم',ku:'منسف گۆشت',en:'Mansaf Meat'},price:20000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/منسف لحم.jpg'},
+{name:{ar:'بركر لحم',ku:'بێرگەر گۆشت',en:'Beef Burger'},price:10000,cat:'وجبات',qty:0,soldout:false,img:'image/بركر لحم.jpg'},
+{name:{ar:'بيتزا وسط',ku:'پێتزای مامناوەند',en:'Medium Pizza'},price:12000,cat:'وجبات',qty:0,soldout:false,img:'image/ai-generated-8885372_1280.png'},
+{name:{ar:'بطاطا',ku:'پەتاتە',en:'Fries'},price:3000,cat:'مقبلات',qty:0,soldout:false,img:'image/بطاطا.jpg'},
+{name:{ar:'كيك',ku:'کێک',en:'Cake'},price:4000,cat:'حلويات',qty:0,soldout:false,img:'image/كيك.jpg'},
+{name:{ar:'ببسي',ku:'پێپسی',en:'Pepsi'},price:1000,cat:'مشروبات',qty:0,soldout:false,img:'image/بسي.jpg'}
 ]
 let cart = {};
 let allBills = JSON.parse(localStorage.getItem('bills')) || [];
