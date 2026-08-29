@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#D32F2F">
-<link rel="icon" href="logo.png" type="image/png">
+<link rel="icon" href="logo.png" type="/png">
 <link rel="apple-touch-icon" href="logo.png">
 <title>نظام كاشير المطعم</title>
 <style>
@@ -182,16 +182,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 let menu = JSON.parse(localStorage.getItem('menu')) || [
-  {name:{ar:'كباب',ku:'کەباب',en:'Kebab'},price:12000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب.png'},
-  {name:{ar:'كباب مع تمن',ku:'کەباب لەگەڵ برنج',en:'Kebab with Rice'},price:14000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/كباب مع تمن.jpg'},
-  {name:{ar:'تمن وقليه',ku:'برنج و قلیە',en:'Rice and Qeema'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/تمن وقليه.jpg'},
-  {name:{ar:'تمن وفاصوليا',ku:'برنج و فاسۆلیا',en:'Rice and Beans'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/تمن وفاصوليا.jpg'},
-  {name:{ar:'منسف لحم',ku:'مەنەسف گۆشت',en:'Mansaf Meat'},price:20000,cat:'وجبات عراقية',qty:0,soldout:false,img:'image/منسف لحم.jpg'},
-  {name:{ar:'برجر لحم',ku:'بەرگەر گۆشت',en:'Beef Burger'},price:10000,cat:'وجبات',qty:0,soldout:false,img:'image/برجر لحم.jpg'},
-  {name:{ar:'بيتزا وسط',ku:'پیتزا مامناوەند',en:'Medium Pizza'},price:12000,cat:'وجبات',qty:0,soldout:false,img:'image/ai-generated-8885372_1280.png'},
-  {name:{ar:'بطاطا',ku:'پەتاتە',en:'Fries'},price:3000,cat:'مقبلات',qty:0,soldout:false,img:'image/بطاطا.jpg'},
-  {name:{ar:'كيك',ku:'کێک',en:'Cake'},price:4000,cat:'حلويات',qty:0,soldout:false,img:'image/كيك.jpg'},
-  {name:{ar:'بيبسي',ku:'پێپسی',en:'Pepsi'},price:1000,cat:'مشروبات',qty:0,soldout:false,img:'image/بيبسى.jpg'}
+  {name:{ar:'كباب',ku:'کەباب',en:'Kebab'},price:12000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/كباب.png'},
+  {name:{ar:'كباب مع تمن',ku:'کەباب لەگەڵ برنج',en:'Kebab with Rice'},price:14000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/كباب مع تمن.jpg'},
+  {name:{ar:'تمن وقليه',ku:'برنج و قلیە',en:'Rice and Qeema'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/تمن وقليه.jpg'},
+  {name:{ar:'تمن وفاصوليا',ku:'برنج و فاسۆلیا',en:'Rice and Beans'},price:8000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/تمن وفاصوليا.jpg'},
+  {name:{ar:'منسف لحم',ku:'مەنەسف گۆشت',en:'Mansaf Meat'},price:20000,cat:'وجبات عراقية',qty:0,soldout:false,img:'/منسف لحم.jpg'},
+  {name:{ar:'برجر لحم',ku:'بەرگەر گۆشت',en:'Beef Burger'},price:10000,cat:'وجبات',qty:0,soldout:false,img:'/برجر لحم.jpg'},
+  {name:{ar:'بيتزا وسط',ku:'پیتزا مامناوەند',en:'Medium Pizza'},price:12000,cat:'وجبات',qty:0,soldout:false,img:'/ai-generated-8885372_1280.png'},
+  {name:{ar:'بطاطا',ku:'پەتاتە',en:'Fries'},price:3000,cat:'مقبلات',qty:0,soldout:false,img:'/بطاطا.jpg'},
+  {name:{ar:'كيك',ku:'کێک',en:'Cake'},price:4000,cat:'حلويات',qty:0,soldout:false,img:'/كيك.jpg'},
+  {name:{ar:'بيبسي',ku:'پێپسی',en:'Pepsi'},price:1000,cat:'مشروبات',qty:0,soldout:false,img:'/بيبسى.jpg'}
 ]
 let cart = {};
 let allBills = JSON.parse(localStorage.getItem('bills')) || [];
@@ -239,10 +239,10 @@ function filterCat(cat, el){
 function renderMenu(items = menu){
   let html='';
   items.filter(i=>currentCat=='all'||i.cat==currentCat).forEach((item,i)=>{
-    let imgSrc = item.img || 'https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+Image';
+    let imgSrc = item.img || 'https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+';
     html+=`<div class="item ${item.soldout?'soldout':''}" onclick="addToCart(${i})">
       <span class="soldout-btn" onclick="toggleSoldout(${i});event.stopPropagation()">${translations[currentLang].out}</span>
-      <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+Image'">
+      <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/150/CCCCCC/FFFFFF?text=No+'">
       <div>${item.name[currentLang]}</div>
       <div>${item.price} ${translations[currentLang].currency}</div>
       <button onclick="editPrice(${i});event.stopPropagation()" class="edit-btn">${translations[currentLang].edit}</button>
