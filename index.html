@@ -160,36 +160,6 @@ window.onload = function(){
   }
   setLang('ar');
 }
-// ====== كود بسيط للازرار ======
-let dailyTotal = parseInt(localStorage.getItem('dailyTotal')) || 0;
-let cart = [];
-
-// الزر الاخضر: حفظ وفاتورة جديدة
-function newInvoice(){
-  let total = 0;
-  cart.forEach(item => total += item.price * item.qty);
-  
-  if(total === 0){ alert('السلة فاضية!'); return; }
-
-  dailyTotal += total;
-  localStorage.setItem('dailyTotal', dailyTotal);
-  cart = [];
-  document.getElementById('total').innerText = '0 د.ع';
-  alert('تم حفظ الفاتورة: ' + total + ' د.ع ✅');
-}
-
-// الزر الازرق: التقرير اليومي
-function dailyReport(){
-  alert('التقرير اليومي\nاجمالي المبيعات: ' + dailyTotal + ' د.ع');
-}
-
-// ربط الازرار
-setTimeout(() => {
-  document.querySelectorAll('button').forEach(btn => {
-    if(btn.innerText.includes('حفظ وفاتورة جديدة')){ btn.onclick = newInvoice; }
-    if(btn.innerText.includes('التقرير اليومي')){ btn.onclick = dailyReport; }
-  });
-}, 500);
   const translations = {
   ar: {title:"1. الشاشة الرئيسية - نظام كاشير",menu:"المنيو - اضغط اضافة",cart:"السلة",table:"رقم الطاولة:",discount:"خصم سريع:",total:"المجموع الكلي",currency:"د.ع",print:"🖨️ طباعة فاتورة",save:"💾 حفظ وفاتورة جديدة",report:"📊 التقرير اليومي",manage:"4. ادارة المنيو",add:"اضافة وجبة جديدة",all:"الكل",meals:"وجبات",iraqi:"وجبات عراقية",app:"مقبلات",drink:"مشروبات",sweet:"حلويات",offer:"عروض",safari:"سفري",table1:"طاولة 1",table2:"طاولة 2",edit:"تعديل",delete:"حذف",out:"نفذت"},
   ku: {title:"1. شاشەی سەرەکی - سیستمی کاشێر",menu:"مینۆ - کلیک بکە بۆ زیادکردن",cart:"سەبەتە",table:"ژمارەی مێز:",discount:"داشکاندنی خێرا:",total:"کۆی گشتی",currency:"د.ع",print:"🖨️ چاپکردنی فاتورە",save:"💾 پاشەکەوت و فاتورەی نوێ",report:"📊 ڕاپۆرتی ڕۆژانە",manage:"4. بەڕێوەبردنی مینۆ",add:"زیادکردنی خواردنی نوێ",all:"هەموو",meals:"خواردن",iraqi:"خواردنی عێراقی",app:"پێشخواردن",drink:"خواردنەوە",sweet:"شیرینی",offer:"ئۆفەر",safari:"بۆ ماڵەوە",table1:"مێز 1",table2:"مێز 2",edit:"دەستکاری",delete:"سڕینەوە",out:"تەواو بوو"},
