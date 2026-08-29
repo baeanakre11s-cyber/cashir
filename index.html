@@ -295,8 +295,19 @@ function deleteItem(name){
 function changeQty(name,d){cart[name].qty+=d; if(cart[name].qty<=0) delete cart[name]; updateCart();}
 function discount(p){currentDiscount=p; updateCart();}
 function toggleManage(){document.getElementById('managePanel').style.display = document.getElementById('managePanel').style.display=='none'?'block':'none';}
-function addNewItem(){alert('اضافة من الادارة قريبا')}
-function toggleSoldout(i){menu[i].soldout=!menu[i].soldout; saveMenu();}
+function addNewItem(){
+ let name = document.getElementById('newName').value.trim();
+let price = document.getElementById('newPrice').value;
+ let cat = document.getElementById('newCat').value
+ if(name == '' || price == ''){ alert('اكتبي اسم الوجبة والسعر'); return; }
+ let newItem = {name: {ar: name, ku: name, en: name}, price: parseInt(price), cat: cat, qty: 0, soldout: false, img: ''};
+ menu.push(newItem);
+localStorage.setItem('menu', JSON.stringify(menu));
+document.getElementById('newName').value = '';
+ document.getElementById('newPrice').value = '';
+renderMenu();
+ alert('تمت اضافة ' + name + ' بنجاح ✅');
+ }
 function saveMenu(){localStorage.setItem('menu',JSON.stringify(menu)); renderMenu();}
 function printBill(){window.print();}
 function saveBill(){newBill();}
