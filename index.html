@@ -6,59 +6,59 @@
 <meta name="theme-color" content="#D32F2F">
 <link rel="icon" href="logo.png" type="/png">
 <link rel="apple-touch-icon" href="logo.png">
-<title>نظام كاشير المطعم</title>
+<title>نظام CASH-2026-POS</title>
 <style>
   *{box-sizing:border-box}
- .edit-btn{
+.edit-btn{
     background:#4CAF50;color:white;border:none;padding:3px 8px;
     border-radius:4px;font-size:12px;margin-top:5px;cursor:pointer;
   }
- .edit-btn:hover{background:#45a049}
- .delete-btn{
+.edit-btn:hover{background:#45a049}
+.delete-btn{
     background:#f44336;color:white;border:none;padding:3px 8px;
     border-radius:4px;font-size:12px;margin-top:5px;cursor:pointer;
   }
   body{font-family:'Tahoma';background:#f5f5f5;margin:0;padding:0}
 
   /* شاشة التفعيل الجديدة */
- .activate-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #D32F2F, #B71C1C);display:flex;justify-content:center;align-items:center;z-index:9999}
- .activate-box{background:#fff;padding:30px;border-radius:15px;text-align:center;width:320px;max-width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.3);animation:pop 0.3s}
+.activate-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #D32F2F, #B71C1C);display:flex;justify-content:center;align-items:center;z-index:9999}
+.activate-box{background:#fff;padding:30px;border-radius:15px;text-align:center;width:320px;max-width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.3);animation:pop 0.3s}
   @keyframes pop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
- .activate-box img{width:80px;height:80px;border-radius:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.2)}
- .activate-box input{width:90%;padding:12px;margin:10px 0;font-size:18px;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none}
- .activate-box input:focus{border-color:#D32F2F}
- .activate-box.btn{background:#D32F2F;color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-size:16px;width:90%;font-weight:bold;transition:0.2s}
- .activate-box.btn:hover{background:#B71C1C;transform:translateY(-2px)}
- .error{color:red;margin-top:10px;font-weight:bold}
+.activate-box img{width:80px;height:80px;border-radius:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.2)}
+.activate-box input{width:90%;padding:12px;margin:10px 0;font-size:18px;text-align:center;border:2px solid #ddd;border-radius:8px;outline:none}
+.activate-box input:focus{border-color:#D32F2F}
+.activate-box.btn{background:#D32F2F;color:#fff;border:none;padding:12px 20px;border-radius:8px;cursor:pointer;font-size:16px;width:90%;font-weight:bold;transition:0.2s}
+.activate-box.btn:hover{background:#B71C1C;transform:translateY(-2px)}
+.error{color:red;margin-top:10px;font-weight:bold}
 
- .header{background:#D32F2F;color:#fff;padding:15px;text-align:center;font-size:18px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 5px rgba(0,0,0,0.2)}
- .lang-btn{background:#fff;color:#D32F2F;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin:0 2px;font-weight:bold}
- .tabs{display:flex;background:#fff;border-bottom:2px solid #D32F2F;overflow-x:auto}
- .tab{padding:12px 20px;cursor:pointer;white-space:nowrap;font-weight:bold}
- .tab.active{background:#D32F2F;color:#fff}
- .container{display:flex;gap:10px;padding:10px;flex-wrap:wrap}
- .menu{flex:3;min-width:300px}
- .cart{flex:1;background:#fff;padding:10px;border-radius:8px;min-width:250px;box-shadow:0 2px 5px rgba(0,0,0,0.1);position:sticky;top:70px;height:fit-content}
- .item{
+.header{background:#D32F2F;color:#fff;padding:15px;text-align:center;font-size:18px;font-weight:bold;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 5px rgba(0,0,0,0.2)}
+.lang-btn{background:#fff;color:#D32F2F;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin:0 2px;font-weight:bold}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #D32F2F;overflow-x:auto}
+.tab{padding:12px 20px;cursor:pointer;white-space:nowrap;font-weight:bold}
+.tab.active{background:#D32F2F;color:#fff}
+.container{display:flex;gap:10px;padding:10px;flex-wrap:wrap}
+.menu{flex:3;min-width:300px}
+.cart{flex:1;background:#fff;padding:10px;border-radius:8px;min-width:250px;box-shadow:0 2px 5px rgba(0,0,0,0.1);position:sticky;top:70px;height:fit-content}
+.item{
     border:1px solid #ddd;padding:10px;margin:5px;border-radius:8px;
     cursor:pointer;text-align:center;width:23%;min-width:180px;
     position:relative;background:#fff;box-sizing:border-box;display:inline-block;vertical-align:top;transition:0.2s
   }
- .item.soldout{opacity:0.6}
- .item:hover{background:#FFEBEE;transform:translateY(-3px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
- .item img{width:100%;height:100px;object-fit:cover;border-radius:5px;pointer-events:none;background:#f0f0f0}
- .cart-item{display:flex;justify-content:space-between;align-items:center;margin:5px 0;border-bottom:1px dashed #ccc;padding:3px;flex-wrap:wrap}
- .btn-del{background:#f44336;color:#fff;border:none;padding:3px 8px;border-radius:3px;cursor:pointer}
- .btn{background:#D32F2F;color:#fff;border:none;padding:10px;width:100%;border-radius:5px;font-size:15px;margin-top:6px;cursor:pointer;font-weight:bold}
- .btn:hover{opacity:0.9}
- .btn.green{background:#4CAF50}.btn.blue{background:#2196F3}.btn.yellow{background:#FFC107;color:#000}
- .total{font-size:22px;font-weight:bold;color:#D32F2F;text-align:center;margin:10px 0;padding:10px;background:#FFF3F3;border-radius:5px}
- .manage{display:none;background:#fff;padding:10px;margin:10px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
- .soldout-btn{position:absolute;top:2px;left:2px;background:#000;color:#fff;font-size:10px;padding:2px 5px;border-radius:3px;cursor:pointer;z-index:2}
+.item.soldout{opacity:0.6}
+.item:hover{background:#FFEBEE;transform:translateY(-3px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
+.item img{width:100%;height:100px;object-fit:cover;border-radius:5px;pointer-events:none;background:#f0f0f0}
+.cart-item{display:flex;justify-content:space-between;align-items:center;margin:5px 0;border-bottom:1px dashed #ccc;padding:3px;flex-wrap:wrap}
+.btn-del{background:#f44336;color:#fff;border:none;padding:3px 8px;border-radius:3px;cursor:pointer}
+.btn{background:#D32F2F;color:#fff;border:none;padding:10px;width:100%;border-radius:5px;font-size:15px;margin-top:6px;cursor:pointer;font-weight:bold}
+.btn:hover{opacity:0.9}
+.btn.green{background:#4CAF50}.btn.blue{background:#2196F3}.btn.yellow{background:#FFC107;color:#000}
+.total{font-size:22px;font-weight:bold;color:#D32F2F;text-align:center;margin:10px 0;padding:10px;background:#FFF3F3;border-radius:5px}
+.manage{display:none;background:#fff;padding:10px;margin:10px;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.soldout-btn{position:absolute;top:2px;left:2px;background:#000;color:#fff;font-size:10px;padding:2px 5px;border-radius:3px;cursor:pointer;z-index:2}
 
   @media(max-width:768px){
-   .container{flex-direction:column}
-   .cart{position:relative;top:0}
+  .container{flex-direction:column}
+  .cart{position:relative;top:0}
   }
 </style>
 </head>
@@ -73,13 +73,13 @@
     <input type="text" id="licenseKey" placeholder="XXXX-XXXX-XXXX">
     <button class="btn" onclick="checkLicense()">تفعيل</button>
     <div class="error" id="errorMsg"></div>
-    <p style="font-size:12px;color:#666">الكود الافتراضي: CASH-2026</p>
+    <p style="font-size:12px;color:#666">الكود: CASH-2026-POS</p>
   </div>
 </div>
 
 <div id="mainApp" style="display:none">
 <div class="header">
-  <span id="title">1. الشاشة الرئيسية - نظام كاشير</span>
+  <span id="title">1. الشاشة الرئيسية - CASH-2026-POS</span>
   <div>
     <button class="lang-btn" onclick="setLang('ar')">عربي</button>
     <button class="lang-btn" onclick="setLang('ku')">کوردی</button>
@@ -161,9 +161,9 @@ window.onload = function(){
   setLang('ar');
 }
   const translations = {
-  ar: {title:"1. الشاشة الرئيسية - نظام كاشير",menu:"المنيو - اضغط اضافة",cart:"السلة",table:"رقم الطاولة:",discount:"خصم سريع:",total:"المجموع الكلي",currency:"د.ع",print:"🖨️ طباعة فاتورة",save:"💾 حفظ وفاتورة جديدة",report:"📊 التقرير اليومي",manage:"4. ادارة المنيو",add:"اضافة وجبة جديدة",all:"الكل",meals:"وجبات",iraqi:"وجبات عراقية",app:"مقبلات",drink:"مشروبات",sweet:"حلويات",offer:"عروض",safari:"سفري",table1:"طاولة 1",table2:"طاولة 2",edit:"تعديل",delete:"حذف",out:"نفذت"},
-  ku: {title:"1. شاشەی سەرەکی - سیستمی کاشێر",menu:"مینۆ - کلیک بکە بۆ زیادکردن",cart:"سەبەتە",table:"ژمارەی مێز:",discount:"داشکاندنی خێرا:",total:"کۆی گشتی",currency:"د.ع",print:"🖨️ چاپکردنی فاتورە",save:"💾 پاشەکەوت و فاتورەی نوێ",report:"📊 ڕاپۆرتی ڕۆژانە",manage:"4. بەڕێوەبردنی مینۆ",add:"زیادکردنی خواردنی نوێ",all:"هەموو",meals:"خواردن",iraqi:"خواردنی عێراقی",app:"پێشخواردن",drink:"خواردنەوە",sweet:"شیرینی",offer:"ئۆفەر",safari:"بۆ ماڵەوە",table1:"مێز 1",table2:"مێز 2",edit:"دەستکاری",delete:"سڕینەوە",out:"تەواو بوو"},
-  en: {title:"1. Main Screen - Cashier System",menu:"Menu - Click to Add",cart:"Cart",table:"Table No:",discount:"Quick Discount:",total:"Total",currency:"IQD",print:"🖨️ Print Bill",save:"💾 Save & New Bill",report:"📊 Daily Report",manage:"4. Menu Management",add:"Add New Item",all:"All",meals:"Meals",iraqi:"Iraqi Food",app:"Appetizers",drink:"Drinks",sweet:"Desserts",offer:"Offers",safari:"Takeaway",table1:"Table 1",table2:"Table 2",edit:"Edit",delete:"Delete",out:"Sold Out"}
+  ar: {title:"1. الشاشة الرئيسية - CASH-2026-POS",menu:"المنيو - اضغط اضافة",cart:"السلة",table:"رقم الطاولة:",discount:"خصم سريع:",total:"المجموع الكلي",currency:"د.ع",print:"🖨️ طباعة فاتورة",save:"💾 حفظ وفاتورة جديدة",report:"📊 التقرير اليومي",manage:"4. ادارة المنيو",add:"اضافة وجبة جديدة",all:"الكل",meals:"وجبات",iraqi:"وجبات عراقية",app:"مقبلات",drink:"مشروبات",sweet:"حلويات",offer:"عروض",safari:"سفري",table1:"طاولة 1",table2:"طاولة 2",edit:"تعديل",delete:"حذف",out:"نفذت"},
+  ku: {title:"1. شاشەی سەرەکی - CASH-2026-POS",menu:"مینۆ - کلیک بکە بۆ زیادکردن",cart:"سەبەتە",table:"ژمارەی مێز:",discount:"داشکاندنی خێرا:",total:"کۆی گشتی",currency:"د.ع",print:"🖨️ چاپکردنی فاتورە",save:"💾 پاشەکەوت و فاتورەی نوێ",report:"📊 ڕاپۆرتی ڕۆژانە",manage:"4. بەڕێوەبردنی مینۆ",add:"زیادکردنی خواردنی نوێ",all:"هەموو",meals:"خواردن",iraqi:"خواردنی عێراقی",app:"پێشخواردن",drink:"خواردنەوە",sweet:"شیرینی",offer:"ئۆفەر",safari:"بۆ ماڵەوە",table1:"مێز 1",table2:"مێز 2",edit:"دەستکاری",delete:"سڕینەوە",out:"تەواو بوو"},
+  en: {title:"1. Main Screen - CASH-2026-POS",menu:"Menu - Click to Add",cart:"Cart",table:"Table No:",discount:"Quick Discount:",total:"Total",currency:"IQD",print:"🖨️ Print Bill",save:"💾 Save & New Bill",report:"📊 Daily Report",manage:"4. Menu Management",add:"Add New Item",all:"All",meals:"Meals",iraqi:"Iraqi Food",app:"Appetizers",drink:"Drinks",sweet:"Desserts",offer:"Offers",safari:"Takeaway",table1:"Table 1",table2:"Table 2",edit:"Edit",delete:"Delete",out:"Sold Out"}
 };
 
 let currentLang = 'ar';
@@ -195,6 +195,7 @@ let menu = JSON.parse(localStorage.getItem('menu')) || [
 ];
 let cart = {};
 let allBills = JSON.parse(localStorage.getItem('bills')) || [];
+let dailyTotal = parseInt(localStorage.getItem('dailyTotal')) || 0;
 let currentDiscount = 0;
 let currentCat = 'all';
 
@@ -309,9 +310,28 @@ renderMenu();
  }
 function saveMenu(){localStorage.setItem('menu',JSON.stringify(menu)); renderMenu();}
 function printBill(){window.print();}
-function saveBill(){newBill();}
-function newBill(){cart={};currentDiscount=0;updateCart();}
-function dailyReport(){alert('التقرير اليومي')}
+
+// ====== كود الازرار الجديد ======
+function saveBill(){
+  let total = 0;
+  for(let name in cart){ total += cart[name].price * cart[name].qty; }
+  let finalTotal = total - (total*currentDiscount/100);
+
+  if(finalTotal === 0){ alert('السلة فاضية!'); return; }
+
+  dailyTotal += finalTotal;
+  localStorage.setItem('dailyTotal', dailyTotal);
+
+  allBills.push({total: finalTotal, time: new Date().toLocaleString()});
+  localStorage.setItem('bills', JSON.stringify(allBills));
+
+  cart={}; currentDiscount=0; updateCart();
+  alert('تم حفظ الفاتورة: ' + finalTotal + ' د.ع ✅');
+}
+
+function dailyReport(){
+  alert('التقرير اليومي\nاجمالي المبيعات: ' + dailyTotal + ' د.ع\nعدد الفواتير: ' + allBills.length);
+}
 
 function editPrice(index){
     let newPrice = prompt("اكتبي السعر الجديد بالدينار:", menu[index].price);
@@ -320,6 +340,12 @@ function editPrice(index){
         localStorage.setItem('menu', JSON.stringify(menu));
         renderMenu();
     }
+}
+
+function toggleSoldout(i){
+  menu[i].soldout =!menu[i].soldout;
+  localStorage.setItem('menu', JSON.stringify(menu));
+  renderMenu();
 }
 
 function exportMenu(){
